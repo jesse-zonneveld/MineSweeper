@@ -1,12 +1,15 @@
 require "./tile.rb"
+require "byebug"
 
 class Board
+    
     def initialize(size, num_bombs)
         @size, @num_bombs = size, num_bombs
-        make_board
+        @grid = []
+        self.make_board
     end
 
-    attr_reader :grid,
+    attr_reader :grid, :size, :num_bombs
 
     def make_board
         @grid = Array.new(@size) do |row|
@@ -16,6 +19,7 @@ class Board
     end
 
     def place_bombs
+        
         grid_positions = Array.new(@size) do |row|
             Array.new(@size) { |col| [row,col] }
         end
@@ -23,7 +27,7 @@ class Board
         bombs_placed = 0
         while bombs_placed < @num_bombs
             rand_pos = Array.new(2) { rand(@size) }
-            if grid_positions.include?(rand_pos)
+            if grid_positions.any? { |row| row.include?(rand_pos) }
                 tile = self[rand_pos]
                 tile.plant_bomb
                 grid_positions.delete(rand_pos)
@@ -72,4 +76,5 @@ class Board
 
 end
 
-b = Board.new(9, 10)
+
+
