@@ -2,6 +2,7 @@ require "./tile.rb"
 require "byebug"
 
 class Board
+    ITEM_COL_WIDTH = 3
     
     def initialize(size, num_bombs)
         @size, @num_bombs = size, num_bombs
@@ -37,10 +38,13 @@ class Board
     end
 
     def render(reveal = false)
-        @grid.map do |row|
+        print "    "
+        @grid.each.with_index { |_, i| print i.to_s.ljust(ITEM_COL_WIDTH)}
+        puts
+        @grid.map.with_index do |row, i|
             row.map do |tile|
                 reveal ? tile.reveal : tile.render
-            end.join("")
+            end.unshift(i.to_s.ljust(ITEM_COL_WIDTH)).join("")
         end.join("\n")
     end
 

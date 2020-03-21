@@ -1,3 +1,5 @@
+require 'colorize'
+
 class Tile
     DELTAS = [
         [-1, -1],
@@ -70,21 +72,21 @@ class Tile
 
     def render
         if flagged?
-            " F "
+            " F ".green
         elsif explored?
-            determine_bomb_count == 0 ? " _ " : " " + determine_bomb_count.to_s + " "
+            determine_bomb_count == 0 ? " _ " : (" " + determine_bomb_count.to_s + " ").yellow
         else
-            " * "
+            " * ".red
         end
     end
 
     def reveal
         if flagged?
-            bombed? ? "F" : "f"
+            bombed? ? "F".green : "f".green
         elsif bombed?
-            explored? ? "X" : "B"
+            explored? ? "X".orange : "B".red
         else
-            determine_bomb_count == 0 ? "_" : determine_bomb_count.to_s
+            determine_bomb_count == 0 ? "_" : determine_bomb_count.to_s.yellow
         end
     end
 
