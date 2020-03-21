@@ -1,3 +1,5 @@
+require "colorize"
+
 class Player
     def initialize(board)
         @board = board
@@ -5,7 +7,8 @@ class Player
     end
 
     def get_prompt_choice
-        puts "Press 'f' to place a flag, or press 'e' to explore, or press 's' to save game."
+        puts "Press 'f' to place a flag, or press 'e' to explore, or press 's' to save game:".yellow
+        print "=>".yellow
         choice = gets.chomp
         until valid_choice?(choice)
             choice = gets.chomp
@@ -14,10 +17,12 @@ class Player
     end
 
     def get_prompt_coord
-        puts "Please enter a coordinate."
+        puts "Please enter a coordinate seperated by a space (example: 2 5):".yellow
+        print "=>".yellow
         coord = gets.chomp.split(" ").map(&:to_i)
         until valid_coord?(coord)
-            puts "Please enter a coordinate."
+            puts "Please enter a #{"VALID".red} coordinate seperated by a space (example: 2 5):".yellow
+            print "=>".yellow
             coord = gets.chomp.split(" ").map(&:to_i)
         end
         coord

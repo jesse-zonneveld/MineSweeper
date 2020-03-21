@@ -76,7 +76,7 @@ class Tile
         elsif explored?
             determine_bomb_count == 0 ? " _ " : (" " + determine_bomb_count.to_s + " ").yellow
         else
-            " * ".red
+            " * ".blue
         end
     end
 
