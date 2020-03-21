@@ -1,5 +1,6 @@
 require_relative "board"
 require_relative "player"
+require 'yaml'
 
 class Game
     LAYOUTS = {
@@ -24,22 +25,37 @@ class Game
             choice = @player.get_prompt_choice
             puts
             sleep(1)
-            coord = @player.get_prompt_coord
             case choice
                 when "f"
+                    coord = @player.get_prompt_coord
                     @board[coord].toggle_flag
                 when "e"
+                    coord = @player.get_prompt_coord
                     @board[coord].explore
+                when "s"
+                    save_game
             end
             puts
+            system("clear")
         end
         puts "you win!" if @board.won?
         puts "you lose!" if @board.lost?
     end
 
+    def save_game
+        puts "Enter filename to save at:"
+        filename = gets.chomp
+        File.write(filename, YAML.dump(self))
+    end
+
 end
 
 if $PROGRAM_NAME == __FILE__
-    game = Game.new
-    game.run
+    
+    case ARGV.count
+    when 0
+        Game.new.run
+    when 1
+        YAML.load_file(ARGV.shift).run
+    end
 end

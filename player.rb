@@ -5,7 +5,7 @@ class Player
     end
 
     def get_prompt_choice
-        puts "Press 'f' to place a flag, or press 'e' to explore."
+        puts "Press 'f' to place a flag, or press 'e' to explore, or press 's' to save game."
         choice = gets.chomp
         until valid_choice?(choice)
             choice = gets.chomp
@@ -24,7 +24,7 @@ class Player
     end
 
     def valid_choice?(choice)
-        return true if choice == "f" || choice == "e"
+        return true if choice == "f" || choice == "e" || choice == "s"
         false
     end
 
